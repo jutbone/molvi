@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://omnistackdigital5.com/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- About page -->
+  <url>
+    <loc>https://omnistackdigital5.com/about</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact page -->
+  <url>
+    <loc>https://omnistackdigital5.com/contact</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Services page -->
+  <url>
+    <loc>https://omnistackdigital5.com/services</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog page -->
+  <url>
+    <loc>https://omnistackdigital5.com/blog</loc>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
