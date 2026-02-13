@@ -23,7 +23,7 @@ const ContactSection = () => {
       return;
     }
 
-    const to = "hello@omnistack.digital";
+    const to = "ahmadraza21jan@gmail.com";
     const subject = encodeURIComponent(`New Inquiry from ${formData.name}${formData.company ? ` - ${formData.company}` : ""}`);
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || "N/A"}\n\nMessage:\n${formData.message}`
@@ -159,13 +159,13 @@ const ContactSection = () => {
             <div className="p-8 rounded-2xl bg-card border border-border">
               <h3 className="font-heading font-semibold text-xl mb-6">Contact Details</h3>
               <div className="space-y-4">
-                <a href="mailto:hello@omnistack.digital" className="flex items-center gap-4 group">
+                <a href="mailto:ahmadraza21jan@gmail.com" className="flex items-center gap-4 group">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Email</div>
-                    <div className="font-medium group-hover:text-primary transition-colors">hello@omnistack.digital</div>
+                    <div className="font-medium group-hover:text-primary transition-colors">ahmadraza21jan@gmail.com</div>
                   </div>
                 </a>
                 <a href="#" className="flex items-center gap-4 group">
