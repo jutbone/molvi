@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,8 +17,22 @@ const ContactSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
+    
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      toast({ title: "Please fill in all required fields", variant: "destructive" });
+      return;
+    }
+
+    const to = "hello@omnistack.digital";
+    const subject = encodeURIComponent(`New Inquiry from ${formData.name}${formData.company ? ` - ${formData.company}` : ""}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company || "N/A"}\n\nMessage:\n${formData.message}`
+    );
+
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+
+    toast({ title: "Opening your email client..." });
+    setFormData({ name: "", email: "", company: "", message: "" });
   };
 
   return (
@@ -130,7 +146,10 @@ const ContactSection = () => {
               <p className="text-muted-foreground mb-6">
                 Schedule a call with our experts to discuss your project requirements and get a custom strategy.
               </p>
-              <Button className="w-full bg-foreground text-background hover:bg-foreground/90 font-semibold py-6">
+              <Button 
+                className="w-full bg-foreground text-background hover:bg-foreground/90 font-semibold py-6"
+                onClick={() => window.location.href = "tel:+923211117869"}
+              >
                 Schedule Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -140,13 +159,13 @@ const ContactSection = () => {
             <div className="p-8 rounded-2xl bg-card border border-border">
               <h3 className="font-heading font-semibold text-xl mb-6">Contact Details</h3>
               <div className="space-y-4">
-                <a href="mailto:ahmadraza21jan@gmail.com" className="flex items-center gap-4 group">
+                <a href="mailto:hello@omnistack.digital" className="flex items-center gap-4 group">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Email</div>
-                    <div className="font-medium group-hover:text-primary transition-colors">ahmadraza21jan@gmail.com</div>
+                    <div className="font-medium group-hover:text-primary transition-colors">hello@omnistack.digital</div>
                   </div>
                 </a>
                 <a href="#" className="flex items-center gap-4 group">

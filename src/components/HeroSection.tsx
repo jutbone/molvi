@@ -1,6 +1,34 @@
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const CountUpNumber = ({ value, suffix = "" }: { value: number; suffix?: string }) => {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (v) => Math.round(v));
+  const ref = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          animate(count, value, { duration: 2, ease: "easeOut" });
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [count, value]);
+
+  return (
+    <span ref={ref} className="gradient-text">
+      <motion.span>{rounded}</motion.span>{suffix}
+    </span>
+  );
+};
 
 const HeroSection = () => {
   return (
@@ -65,6 +93,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               className="bg-gradient-primary hover:opacity-90 text-primary-foreground font-semibold shadow-[var(--shadow-button)] px-8 py-6 text-lg group"
+              onClick={() => window.location.href = "tel:+923211117869"}
             >
               Book a Free Strategy Call
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -87,15 +116,24 @@ const HeroSection = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-border"
           >
             {[
-              { value: "150+", label: "Projects Delivered" },
-              { value: "50+", label: "Happy Clients" },
-              { value: "5+", label: "Years Experience" },
-              { value: "24/7", label: "Support Available" },
+              { value: 150, suffix: "+", label: "Projects Delivered" },
+              { value: 50, suffix: "+", label: "Happy Clients" },
+              { value: 5, suffix: "+", label: "Years Experience" },
+              { value: 24, suffix: "/7", label: "Support Available" },
             ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-heading font-bold gradient-text">{stat.value}</div>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-3xl md:text-4xl font-heading font-bold">
+                  <CountUpNumber value={stat.value} suffix={stat.suffix} />
+                </div>
                 <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
